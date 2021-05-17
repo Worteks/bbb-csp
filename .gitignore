@@ -1,0 +1,4 @@
+/BigBlueButton-liveStreaming
+/node_modules
+*.[0-9]
+.*.sw[a-z]

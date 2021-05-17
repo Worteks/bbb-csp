@@ -1,0 +1,40 @@
+<html>
+    <head>
+	<title>BigBlueButton Conferences Streaming Platform</title>
+	<link rel="stylesheet" type="text/css" href="./css/dostream.css">
+	<link rel="icon" href="./img/favicon.ico">
+	<script src="./js/backend.js"></script>
+	<script src="./js/dostream.js"></script>
+    </head>
+    <body onLoad='initStartForm();'>
+	<h1>Start Stream</h1>
+	<p id='main-content'>
+	    <table>
+		<tr>
+		    <td>Stream Settings</td>
+		    <td colspan='2' align='center'>
+			<input type='text' id='stream-name' placeholder='Stream Display Name'></select>
+		    </td>
+		</tr>
+		<tr>
+		    <td>Peertube Destination</td>
+		    <td><select id='peertube-channel'></select></td>
+		    <td><div id='channel-reload'></div></td>
+		</tr>
+		<tr>
+		    <td>BigBlueButton Meeting</td>
+		    <td><select id='bbb-meeting-id'></select></td>
+		    <td><div id='meeting-reload'></div></td>
+		</tr>
+		<tr><td colspan='3'>&nbsp;</td></tr>
+		<tr>
+		    <td colspan='3' align'center'>
+			<input type='button' value='Good to Go!' onClick='createAndStartStream();'>
+		    </td>
+		</tr>
+	    </table>
+	</p>
+	<p id='feedback'></p>
+	<h2><a href='./index.html'>List Streams</a><h2>
+    </body>
+</html>

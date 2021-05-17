@@ -1,0 +1,12 @@
+h1,a {
+    color: orange;    
+    text-decoration: underline;
+}
+
+#main-content th {
+    text-align: center;
+}
+
+#main-content tr {
+    text-align: left;
+}
