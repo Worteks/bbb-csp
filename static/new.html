@@ -11,9 +11,36 @@
 	<p id='main-content'>
 	    <table>
 		<tr>
-		    <td>Stream Settings</td>
+		    <td rowspan='4' style='vertical-align:top;width:200px;'>Stream Settings</td>
 		    <td colspan='2' align='center'>
 			<input type='text' id='stream-name' placeholder='Stream Display Name'></select>
+		    </td>
+		</tr>
+		<tr>
+		    <td colspan='2' align='center'>
+			<input type='text' id='stream-description' placeholder='Stream Description'></select>
+		    </td>
+		</tr>
+		<tr>
+		    <td colspan='2' align='center'>
+			<select id='language-code'>
+			    <option value='en' selected>English</option>
+			    <option value='eu'>Euskara</option>
+			    <option value='fr'>Francais</option>
+			</select>
+		    </td>
+		</tr>
+		<tr>
+		    <td colspan='2' align='center'>
+			<select id='license-code'>
+			    <option value='1'>Attribution</option>
+			    <option value='2'>Attribution - Share Alike</option>
+			    <option value='3'>Attribution - No Derivatives</option>
+			    <option value='4'>Attribution - Non Commercial</option>
+			    <option value='5'>Attribution - Non Commercial - Share Alike</option>
+			    <option value='6'>Attribution - Non Commercial - No Derivatives</option>
+			    <option value='7' selected>Public Domain Dedication</option>
+			</select>
 		    </td>
 		</tr>
 		<tr>

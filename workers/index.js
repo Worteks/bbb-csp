@@ -143,18 +143,16 @@ app.post('/start', (req, res) => {
 	    if (params.bbbMeetingId !== undefined) {
 		console.log(`${clt} received start request`);
 		let attendeePassword = false,
-		    token = false;
+		    token = false,
+		    videoId = false;
 		streams.getStreams(`/livestream-${req.params.bbbMeetingId}`)
 		    .then((found) => {
 			    if (found.length > 0) {
 				console.log(`${clt} trying to re-stream a meeting we already have`);
 				throw new Error('stream already exists');
 			    } else {
-				//FIXME: stopped containers are not returned by the above command
-				//       yet having an existing container with matching name stopped
-				//       would prevent further container creations ...
 				console.log(`${clt} starting stream for ${req.params.bbbMeetingId}`);
-				return pt.doLogin(token);
+				return pt.doLogin();
 			    }
 			})
 		    .then((gotToken) => {
@@ -163,13 +161,16 @@ app.post('/start', (req, res) => {
 			    let liveParams = {
 				    channelId: params.ptChannelId,
 				    description: params.streamDescr || 'BigBlueButton Conference',
+				    languageCode: params.languageCode || 'en',
+				    licenseCode: params.licenseCode || '7',
 				    streamName: params.streamName || 'my-awesome-stream'
 				};
 			    return pt.createLive(token, liveParams);
 			})
 		    .then((l) => {
-			    console.log(`${clt} created live in peertube (video id: ${l.videoId})`);
-			    return pt.getStreamKey(token, l.videoId);
+			    videoId = l.videoId;
+			    console.log(`${clt} created live in peertube (video id: ${videoId})`);
+			    return pt.getStreamKey(token, videoId);
 			})
 		    .then((k) => {
 			    console.log(`${clt} got stream key back from peertube (stream key: ${k.streamKey})`);
@@ -208,6 +209,12 @@ app.post('/start', (req, res) => {
 			})
 		    .then(() => {
 			    console.log(`${clt} stream-start returned OK`);
+			    if (videoId !== false) {
+				return pt.publishLive(token, videoId);
+			    } else { console.log('warning: videoId missing'); }
+			})
+		    .then(() => {
+			    if (videoId !== false) { console.log('saveReplay PUT OK'); }
 			    res.send('OK');
 			})
 		    .catch((e) => {

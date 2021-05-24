@@ -28,8 +28,7 @@ var postJSON = function(url, params, callback) {
 	} else { xhr.send(); }
     };
 
-function renderStopButton(id)
-{
+function renderStopButton(id) {
     return '<input type="button" '
 		+ 'value="Stop Streaming" '
 		+ `onClick="stopStream('${id}');">`;
@@ -146,13 +145,16 @@ function stopStream(containerId) {
 function createAndStartStream() {
     var bbbMeetingId = document.getElementById('bbb-meeting-id').value;
     var fbcontent = document.getElementById('feedback');
+    var languageCode = document.getElementById('language-code').value;
+    var licenseCode = document.getElementById('license-code').value;
     var ptChannelId = document.getElementById('peertube-channel').value;
     var streamName = document.getElementById('stream-name').value;
-    var streamDescr = 'BigBlueButton Conference ' + streamName;
+    var streamDescr = document.getElementById('stream-description').value;
     if (ptChannelId !== '' && bbbMeetingId !== '') {
 	fbcontent.innerHTML = 'Preparing to stream meeting... please wait';
 	postJSON(API_URL + '/start',
 		 'ptChannelId='+ptChannelId+'&bbbMeetingId='+bbbMeetingId
+	         +'&languageCode='+languageCode+'&licenseCode='+licenseCode
 		 +'&streamName='+streamName+'&streamDescr='+streamDescr,
 		 function(err, data) {
 		     if (err != null) {
