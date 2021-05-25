@@ -4,9 +4,7 @@ install:
 
 .PHONY: clean
 clean:
-	@@rm -fr "$$wd" node_modules
-	@@git checkout -- config.js
-	@@git checkout -- static/js/backend.js
+	rm -fr node_modules
 
 .PHONY: prep-runtime
 prep-runtime:

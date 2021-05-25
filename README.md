@@ -1,6 +1,6 @@
 # BigBlueButton Conference Streaming Platform
 
-Starts and Stops BigBlueButton LiveStream containers, streaming to PeerTube.
+Starts and Stops BigBlueButton LiveStream containers.
 
 ## Usage
 
@@ -11,7 +11,13 @@ $ npm install
 ```
 
 Configure BigBlueButton API URL and corresponding secret, Peertube RTMP
-Server Hostname, NodeJS bind address and port in `./config.js`.
+Server Hostname, NodeJS bind address and port in `./config.js` - use
+`./config.js.sample`:
+
+```
+$ cp config.js.sample config.js
+$ vi config.js
+```
 
 Start API server:
 
@@ -20,12 +26,14 @@ $ node workers/index.js
 ```
 
 Setup your webserver. DocumentRoot should point to the `./static` subdir.
-Webserver should deal with authenticating users.
+Webserver should deal with authenticating users however you would see fit.
 
-Edit `./static/js/backend.js` `API_HOST`, `API_PORT` and `API_PROTO`,
-pointing to your API server address.
+Define your own `API_HOST`, `API_PORT` and `API_PROTO` in
+`./static/js/backend.js` - use `./static/js/backend.js.sample`. Those would
+be loaded by clients, and should point them to our NodeJS API server:
 
 ```
+$ cat static/js/backend.js.sample
 $ cat <<EOF >./static/js/backend.js
 var API_HOST = 'abc.example.com';
 var API_PORT = 443;

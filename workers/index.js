@@ -208,6 +208,11 @@ app.post('/start', (req, res) => {
 			    }
 			})
 		    .then(() => {
+			/*
+			 *
+			 * pending further investigations
+			 * see: https://github.com/Chocobozzz/PeerTube/issues/4115
+			 *
 			    console.log(`${clt} stream-start returned OK`);
 			    if (videoId !== false) {
 				return pt.publishLive(token, videoId);
@@ -215,6 +220,11 @@ app.post('/start', (req, res) => {
 			})
 		    .then(() => {
 			    if (videoId !== false) { console.log('saveReplay PUT OK'); }
+			 *
+			 * pending further investigations
+			 * see: https://github.com/Chocobozzz/PeerTube/issues/4115
+			 *
+			 */
 			    res.send('OK');
 			})
 		    .catch((e) => {
