@@ -11,7 +11,7 @@ $ npm install
 ```
 
 Configure BigBlueButton API URL and corresponding secret, Peertube RTMP
-Server Hostname, NodeJS bind address and port in `./config.js.
+Server Hostname, NodeJS bind address and port in `./config.js`.
 
 Start API server:
 
