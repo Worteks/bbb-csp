@@ -143,8 +143,7 @@ app.post('/start', (req, res) => {
 	    if (params.bbbMeetingId !== undefined) {
 		console.log(`${clt} received start request`);
 		let attendeePassword = false,
-		    token = false,
-		    videoId = false;
+		    token = false;
 		streams.getStreams(`/livestream-${req.params.bbbMeetingId}`)
 		    .then((found) => {
 			    if (found.length > 0) {
@@ -159,18 +158,17 @@ app.post('/start', (req, res) => {
 			    token = gotToken;
 			    console.log(`${clt} successfully logged in with peertube`);
 			    let liveParams = {
-				    channelId: params.ptChannelId,
-				    description: params.streamDescr || 'BigBlueButton Conference',
-				    languageCode: params.languageCode || 'en',
-				    licenseCode: params.licenseCode || '7',
-				    streamName: params.streamName || 'my-awesome-stream'
+				    channelId: helpers.removeJunk(params.ptChannelId),
+				    description: helpers.removeJunk(params.streamDescr || 'BigBlueButton Conference'),
+				    languageCode: helpers.removeJunk(params.languageCode || 'en'),
+				    licenseCode: helpers.removeJunk(params.licenseCode || '7'),
+				    streamName: helpers.removeJunk(params.streamName || 'my-awesome-stream')
 				};
 			    return pt.createLive(token, liveParams);
 			})
 		    .then((l) => {
-			    videoId = l.videoId;
-			    console.log(`${clt} created live in peertube (video id: ${videoId})`);
-			    return pt.getStreamKey(token, videoId);
+			    console.log(`${clt} created live in peertube (video id: ${l.videoId})`);
+			    return pt.getStreamKey(token, l.videoId);
 			})
 		    .then((k) => {
 			    console.log(`${clt} got stream key back from peertube (stream key: ${k.streamKey})`);
@@ -208,23 +206,7 @@ app.post('/start', (req, res) => {
 			    }
 			})
 		    .then(() => {
-			/*
-			 *
-			 * pending further investigations
-			 * see: https://github.com/Chocobozzz/PeerTube/issues/4115
-			 *
 			    console.log(`${clt} stream-start returned OK`);
-			    if (videoId !== false) {
-				return pt.publishLive(token, videoId);
-			    } else { console.log('warning: videoId missing'); }
-			})
-		    .then(() => {
-			    if (videoId !== false) { console.log('saveReplay PUT OK'); }
-			 *
-			 * pending further investigations
-			 * see: https://github.com/Chocobozzz/PeerTube/issues/4115
-			 *
-			 */
 			    res.send('OK');
 			})
 		    .catch((e) => {
