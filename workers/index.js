@@ -35,6 +35,7 @@ if (process.env.SERVE_STATIC_ASSETS !== undefined) {
 	    'img/loading.gif',
 	    'img/reload.png',
 	    'index.html',
+	    'js/backend.js',
 	    'js/dostream.js',
 	    'new.html'
 	];
