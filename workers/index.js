@@ -32,6 +32,7 @@ app.use(bodyParser.json());
 if (process.env.SERVE_STATIC_ASSETS !== undefined) {
     const assets = [
 	    'css/dostream.css',
+	    'img/favicon.ico',
 	    'img/loading.gif',
 	    'img/reload.png',
 	    'index.html',
@@ -43,7 +44,7 @@ if (process.env.SERVE_STATIC_ASSETS !== undefined) {
     try {
 	for (let i = 0; i < assets.length; i++) {
 	    let buf = fs.readFileSync(`./static/${assets[i]}`);
-	    app.get(`/${assets[i]}`, (req, res) => res.send(buf));
+	    app.get(`/static/${assets[i]}`, (req, res) => res.send(buf));
 	}
 	app.get('/', (req, res) => res.redirect('/index.html'));
     } catch(e) {
